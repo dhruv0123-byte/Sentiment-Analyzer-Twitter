@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Sentiment Analysis</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        textarea, input {
+            width: 80%;
+            max-width: 400px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            font-weight: bold;
+            margin-top: 15px;
+            color: #007bff;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Real-Time Sentiment Analysis</h1>
+    <textarea id="feedback" placeholder="Enter your feedback"></textarea><br>
+    <input type="text" id="location" placeholder="Enter location (lat, long)"><br>
+    <button onclick="analyzeSentiment()">Analyze</button>
+    <p id="result"></p>
+    <a href="/dashboard">Go to Dashboard</a>
+
+    <script>
+        function analyzeSentiment() {
+            let text = $("#feedback").val();
+            let location = $("#location").val();
+
+            $.ajax({
+                url: "/analyze",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ text: text, location: location }),
+                success: function(response) {
+                    $("#result").text("Sentiment: " + response.sentiment);
+                },
+                error: function() {
+                    $("#result").text("Error analyzing sentiment.");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
