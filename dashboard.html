@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Dashboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        #feedback-list {
+            padding: 0;
+            list-style-type: none;
+        }
+        #feedback-list li {
+            background: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+        #ai-insights {
+            padding: 15px;
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 5px;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        img {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Feedback Sentiment Dashboard</h1>
+    
+    <section>
+        <h2>Recent Feedbacks</h2>
+        <ul id="feedback-list"></ul>
+    </section>
+
+    <section>
+        <h2>Visualizations</h2>
+        <div class="chart-container">
+            <img id="wordcloud" src="/static/wordcloud.png" alt="Word Cloud" width="300px">
+            <img id="bar_chart" src="/static/bar_chart.png" alt="Bar Chart" width="300px">
+            <img id="pie_chart" src="/static/pie_chart.png" alt="Pie Chart" width="300px">
+        </div>
+    </section>
+
+    <section>
+        <h2>AI-Based Business Insights</h2>
+        <div id="ai-insights">
+            <p>Loading insights...</p>
+        </div>
+    </section>
+
+    <script>
+        function fetchFeedbacks() {
+            $.getJSON("/feedbacks", function(data) {
+                $("#feedback-list").empty();
+                data.f
