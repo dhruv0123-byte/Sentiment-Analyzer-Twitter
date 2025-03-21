@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Sentiment Analysis</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Real-Time Sentiment Analysis</h1>
+    <textarea id="feedback" placeholder="Enter your feedback"></textarea>
+    <button onclick="analyzeSentiment()">Analyze Sentiment</button>
+    <p id="result"></p>
+
+    <script>
+        function analyzeSentiment() {
+            let text = $("#feedback").val();
+            $.ajax({
+                url: "/analyze",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ text: text }),
+                success: function(response) {
+                    $("#result").text("Sentiment: " + response.sentiment);
+                },
+                error: function() {
+                    $("#result").text("Error analyzing sentiment.");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
