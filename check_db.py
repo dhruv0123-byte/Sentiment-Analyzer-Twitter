@@ -3,11 +3,14 @@ import sqlite3
 conn = sqlite3.connect("customer_feedbacks.db")
 cursor = conn.cursor()
 
-# Check existing data
-cursor.execute("SELECT id, feedback FROM feedbacks;")  # Sentiment hata diya
-rows = cursor.fetchall()
+try:
+    cursor.execute("SELECT id, feedback FROM feedbacks;")
+    rows = cursor.fetchall()
 
-for row in rows:
-    print(row)  # Print all feedbacks
-
-conn.close()
+    print("\nCustomer Feedbacks:")
+    for row in rows:
+        print(f"ID: {row[0]}, Feedback: {row[1]}")
+except sqlite3.Error as e:
+    print(f"An error occurred: {e}")
+finally:
+    conn.close()
